@@ -32,3 +32,33 @@ let chatters = [];
 
 // Store messages in chatroom
 let chat_messages = [];
+
+// Read credentials from JSON
+fs.readFile('creds.json', 'utf-8', (err, data) => {
+  if (err) {
+    throw err;
+  }
+  creds = JSON.parse(data);
+  client = redis.createClient(`redis://${creds.user}:${creds.password}@${creds.host}:${creds.port}`);
+
+  // Redis Client Ready
+  client.once('ready', () => {
+
+    // Flush Redis DB
+    // client.flushdb();
+
+    // Initialize Chatters
+    client.get('chat_users', (err, reply) => {
+      if (reply) {
+        chatters = JSON.parse(reply);
+      }
+    });
+
+    // Initialize Messages
+    client.get('chat_app_messages', (err, reply) => {
+      if (reply) {
+        chat_messages = JSON.parse(reply);
+      }
+    });
+  });
+});
