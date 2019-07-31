@@ -8,6 +8,8 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+const path = require('path');
+
 const fs = require('fs');
 
 let creds = '';
@@ -64,6 +66,11 @@ fs.readFile('creds.json', 'utf-8', (err, data) => {
   });
 });
 
+// API - index/home
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/', 'index.html'));
+});
+
 // API - Join Chat
 app.post('/join', (req, res) => {
   const username = req.body.username;
@@ -72,11 +79,11 @@ app.post('/join', (req, res) => {
     client.set('chat_users', JSON.stringify(chatters));
     res.send({
       'chatters': chatters,
-      'status': 'OK'
+      'status': 'OK',
     });
   } else {
     res.send({
-      'status': 'FAILED'
+      'status': 'FAILED',
     });
   }
 });
@@ -84,6 +91,7 @@ app.post('/join', (req, res) => {
 // API - Leave Chat
 app.post('/leave', (req, res) => {
   const username = req.body.username;
+  // console.table(req.body);
   chatters.splice(chatters.indexOf(username), 1);
   client.set('chat_users', JSON.stringify(chatters));
   res.send({
@@ -94,6 +102,7 @@ app.post('/leave', (req, res) => {
 // API - Send + Store Message
 app.post('/send_message', (req, res) => {
   const username = req.body.username;
+  // console.table(req.body);
   const message = req.body.message;
   chat_messages.push({
     'sender': username,

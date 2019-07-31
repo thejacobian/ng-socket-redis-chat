@@ -1,0 +1,33 @@
+body {
+  text-align: center;
+  align-content: center;
+}
+
+.msg {
+  text-align: left;
+}
+
+.user {
+  font-weight: bolder;
+  padding-right: 5px;
+  display: inline;
+}
+
+.txt {
+  display: inline;
+}
+
+.messages {
+  margin: auto;
+  width: 50%;
+  border: 3px solid;
+  padding: 10px;
+}
+
+#message {
+  margin-top: 10px;
+}
+
+.chat {
+  display: none;
+}
