@@ -19,7 +19,7 @@
   "homepage": "https://github.com/thejacobian/ng-socket-redis-chat#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "redis": "^2.8.0",
     "socket.io": "^2.2.0"
   },
